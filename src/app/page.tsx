@@ -17,8 +17,28 @@ export default function Home() {
           <p className="text-sm uppercase tracking-wide text-zinc-500">Monetized Content Engine</p>
           <h1 className="mt-3 text-4xl font-bold leading-tight">Build authority and revenue through high-intent blog content.</h1>
           <p className="mt-4 max-w-xl text-zinc-600 dark:text-zinc-300">
-            GrowthPress publishes practical guides on AI, freelancing, and online business designed for organic traffic and affiliate conversions.
+            GrowthPress publishes original, practical guides on AI, freelancing, dropshipping, and online business—optimized for clarity, SEO, and sustainable monetization on any host (including Vercel).
           </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link
+              href="/blog"
+              className="rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow hover:bg-emerald-500 dark:bg-emerald-500 dark:text-zinc-950 dark:hover:bg-emerald-400"
+            >
+              Browse all articles
+            </Link>
+            <Link
+              href="/about"
+              className="rounded-xl border border-zinc-300 px-5 py-2.5 text-sm font-semibold text-zinc-800 hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-100 dark:hover:bg-zinc-800"
+            >
+              About GrowthPress
+            </Link>
+            <Link
+              href="/contact"
+              className="rounded-xl px-2 py-2.5 text-sm font-medium text-emerald-700 underline-offset-4 hover:underline dark:text-emerald-400"
+            >
+              Contact editorial
+            </Link>
+          </div>
         </div>
         <AdSlot slot="header" />
       </section>
