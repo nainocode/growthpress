@@ -1,12 +1,34 @@
+"use client";
+
+import { useEffect } from "react";
+
 interface AdSlotProps {
-  slot: "header" | "in-article" | "sidebar";
+  slot: string;
+}
+
+declare global {
+  interface Window {
+    adsbygoogle: any[];
+  }
 }
 
 export function AdSlot({ slot }: AdSlotProps) {
+  useEffect(() => {
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {
+      console.log("AdSense error:", e);
+    }
+  }, []);
+
   return (
-    <div className="rounded-xl border border-dashed border-zinc-300 bg-zinc-50 p-4 text-center text-sm text-zinc-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400">
-      <p className="font-medium uppercase tracking-wide">AdSense Slot: {slot}</p>
-      <p className="mt-1 text-xs">Replace with Google AdSense script unit in production.</p>
-    </div>
+    <ins
+      className="adsbygoogle"
+      style={{ display: "block" }}
+      data-ad-client="ca-pub-4412628459194919"
+      data-ad-slot={slot}
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    />
   );
 }

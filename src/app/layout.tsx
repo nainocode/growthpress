@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} | Modern Growth Blog`,
+    default: `${siteConfig.name} | Naino Growth Blog`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -29,7 +29,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
       <body
@@ -38,7 +42,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       >
         <ThemeProvider>
           <Header />
-          <main className="mx-auto min-h-[calc(100vh-140px)] w-full max-w-6xl px-4 py-8 sm:px-6">{children}</main>
+
+          <main className="mx-auto min-h-[calc(100vh-140px)] w-full max-w-6xl px-4 py-8 sm:px-6">
+            {children}
+          </main>
+
           <Footer />
         </ThemeProvider>
       </body>
