@@ -1,3 +1,6 @@
+
+
+
 "use client";
 
 import { type ChangeEvent, type FormEvent, useState } from "react";
@@ -162,7 +165,7 @@ export function AdminEditor({ existingPosts = [] }: Props) {
       return;
     }
     setForm(formStateFromBlogPost(post));
-    setBanner({ text: `Loaded “${post.title}”.`, variant: "success" });
+    setBanner({ text: `Loaded "${post.title}".`, variant: "success" });
   };
 
   const updateField = <K extends keyof AdminEditorFormState>(key: K, value: AdminEditorFormState[K]) => {
@@ -234,7 +237,7 @@ export function AdminEditor({ existingPosts = [] }: Props) {
         slug: slugForSave,
         slugAuto: false,
       }));
-      setBanner({ text: `Post saved as “${slugForSave}”.`, variant: "success" });
+      setBanner({ text: `Post saved as "${slugForSave}".`, variant: "success" });
       router.refresh();
     } finally {
       setSaving(false);
@@ -248,9 +251,9 @@ export function AdminEditor({ existingPosts = [] }: Props) {
     }
 
     const inList = existingPosts.some((p) => p.slug === slugEffective);
-    const warning = inList ? "" : " This slug isn’t in the saved list—the file may not exist.";
+    const warning = inList ? "" : " This slug isn't in the saved list—the file may not exist.";
 
-    if (!window.confirm(`Delete post “${slugEffective}”? This removes its Markdown file from disk.${warning}`)) return;
+    if (!window.confirm(`Delete post "${slugEffective}"? This removes its Markdown file from disk.${warning}`)) return;
 
     setDeleting(true);
     try {
@@ -373,9 +376,7 @@ export function AdminEditor({ existingPosts = [] }: Props) {
                     id="slug-auto"
                     type="checkbox"
                     checked={form.slugAuto}
-                    onChange={(e) =>
-                      updateField("slugAuto", e.target.checked)
-                    }
+                    onChange={(e) => updateField("slugAuto", e.target.checked)}
                   />
                   Auto-generate slug from title
                 </label>
@@ -481,8 +482,7 @@ export function AdminEditor({ existingPosts = [] }: Props) {
             <div className="flex flex-col gap-4 lg:flex-row">
               <div className="flex-1 space-y-2">
                 <label className={labelCls} htmlFor="feat-url">
-                  Image URL /
-                  path <span className="text-red-500">*</span>
+                  Image URL / path <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="feat-url"
@@ -491,10 +491,7 @@ export function AdminEditor({ existingPosts = [] }: Props) {
                   value={form.featuredImage}
                   onChange={(e) => updateField("featuredImage", e.target.value)}
                 />
-                <label
-                  htmlFor="feat-upload"
-                  className="inline-flex cursor-pointer items-center gap-2"
-                >
+                <label htmlFor="feat-upload" className="inline-flex cursor-pointer items-center gap-2">
                   <span className="rounded-lg bg-zinc-900 px-3 py-2 text-sm font-medium text-white dark:bg-emerald-500 dark:text-zinc-950">
                     {uploadBusy ? "Uploading…" : "Upload file"}
                   </span>
@@ -522,8 +519,7 @@ export function AdminEditor({ existingPosts = [] }: Props) {
                       sizes="(max-width: 1024px) 100vw, 224px"
                       suppressHydrationWarning
                     />
-                  ) : form.featuredImage.startsWith("http://") ||
-                    form.featuredImage.startsWith("https://") ? (
+                  ) : form.featuredImage.startsWith("http://") || form.featuredImage.startsWith("https://") ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img
                       src={form.featuredImage}
@@ -751,10 +747,158 @@ function PostPreviewMarkdown({
     <div className="mt-4">
       <p className="text-xs uppercase tracking-wide text-zinc-400">Draft title</p>
       <p className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">{title || "(untitled)"}</p>
-      {description.trim() ? <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">{description}</p> : null}
-      <div className="prose prose-sm prose-zinc mt-6 max-h-[min(60vh,640px)] max-w-none overflow-y-auto pb-12 dark:prose-invert prose-headings:scroll-mt-28">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown || "_No body yet._"}</ReactMarkdown>
+      {description.trim() ? (
+        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">{description}</p>
+      ) : null}
+
+      {/* ✅ FIX: prose classes hataye, custom components se har element manually style kiya */}
+      <div className="mt-6 max-h-[min(60vh,640px)] max-w-none overflow-y-auto pb-12">
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          components={{
+            // ── Headings ─────────────────────────────────────────────
+            h1: ({ children }) => (
+              <h1 className="mb-4 mt-8 border-b border-zinc-200 pb-2 text-2xl font-bold text-zinc-900 dark:border-zinc-700 dark:text-zinc-50 first:mt-0">
+                {children}
+              </h1>
+            ),
+            h2: ({ children }) => (
+              <h2 className="mb-3 mt-7 text-xl font-semibold text-zinc-900 dark:text-zinc-50 first:mt-0">
+                {children}
+              </h2>
+            ),
+            h3: ({ children }) => (
+              <h3 className="mb-2 mt-5 text-lg font-semibold text-zinc-800 dark:text-zinc-100 first:mt-0">
+                {children}
+              </h3>
+            ),
+            h4: ({ children }) => (
+              <h4 className="mb-2 mt-4 text-base font-semibold text-zinc-700 dark:text-zinc-200 first:mt-0">
+                {children}
+              </h4>
+            ),
+            h5: ({ children }) => (
+              <h5 className="mb-1 mt-3 text-sm font-semibold text-zinc-700 dark:text-zinc-200 first:mt-0">
+                {children}
+              </h5>
+            ),
+            h6: ({ children }) => (
+              <h6 className="mb-1 mt-3 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400 first:mt-0">
+                {children}
+              </h6>
+            ),
+
+            // ── Paragraph ────────────────────────────────────────────
+            p: ({ children }) => (
+              <p className="mb-4 text-sm leading-7 text-zinc-700 last:mb-0 dark:text-zinc-300">
+                {children}
+              </p>
+            ),
+
+            // ── Lists ────────────────────────────────────────────────
+            ul: ({ children }) => (
+              <ul className="mb-4 ml-5 list-disc space-y-1.5 text-sm text-zinc-700 dark:text-zinc-300">
+                {children}
+              </ul>
+            ),
+            ol: ({ children }) => (
+              <ol className="mb-4 ml-5 list-decimal space-y-1.5 text-sm text-zinc-700 dark:text-zinc-300">
+                {children}
+              </ol>
+            ),
+            li: ({ children }) => (
+              <li className="leading-7 text-zinc-700 dark:text-zinc-300">{children}</li>
+            ),
+
+            // ── Inline formatting ─────────────────────────────────────
+            strong: ({ children }) => (
+              <strong className="font-semibold text-zinc-900 dark:text-zinc-50">{children}</strong>
+            ),
+            em: ({ children }) => (
+              <em className="italic text-zinc-600 dark:text-zinc-400">{children}</em>
+            ),
+            del: ({ children }) => (
+              <del className="text-zinc-400 line-through dark:text-zinc-500">{children}</del>
+            ),
+
+            // ── Blockquote ────────────────────────────────────────────
+            blockquote: ({ children }) => (
+              <blockquote className="my-4 border-l-4 border-emerald-500 pl-4 text-sm italic text-zinc-600 dark:border-emerald-400 dark:text-zinc-400">
+                {children}
+              </blockquote>
+            ),
+
+            // ── Code ─────────────────────────────────────────────────
+            // @ts-expect-error – react-markdown passes `inline` but types vary by version
+            code: ({ inline, children, className, ...props }) => {
+              if (inline) {
+                return (
+                  <code className="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-[12px] text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200">
+                    {children}
+                  </code>
+                );
+              }
+              return (
+                <code className={cn("block font-mono text-[12px] text-zinc-800 dark:text-zinc-200", className)} {...props}>
+                  {children}
+                </code>
+              );
+            },
+            pre: ({ children }) => (
+              <pre className="mb-4 overflow-x-auto rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-700 dark:bg-zinc-900">
+                {children}
+              </pre>
+            ),
+
+            // ── Table ─────────────────────────────────────────────────
+            table: ({ children }) => (
+              <div className="mb-4 overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-700">
+                <table className="w-full text-sm">{children}</table>
+              </div>
+            ),
+            thead: ({ children }) => (
+              <thead className="bg-zinc-50 dark:bg-zinc-800/60">{children}</thead>
+            ),
+            tbody: ({ children }) => <tbody>{children}</tbody>,
+            tr: ({ children }) => (
+              <tr className="border-b border-zinc-100 last:border-0 dark:border-zinc-800">{children}</tr>
+            ),
+            th: ({ children }) => (
+              <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                {children}
+              </th>
+            ),
+            td: ({ children }) => (
+              <td className="px-4 py-2.5 text-zinc-700 dark:text-zinc-300">{children}</td>
+            ),
+
+            // ── Misc ─────────────────────────────────────────────────
+            hr: () => <hr className="my-6 border-zinc-200 dark:border-zinc-700" />,
+            a: ({ href, children }) => (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-emerald-600 underline underline-offset-2 hover:text-emerald-500 dark:text-emerald-400 dark:hover:text-emerald-300"
+              >
+                {children}
+              </a>
+            ),
+            img: ({ src, alt }) => (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={src}
+                alt={alt ?? ""}
+                className="my-4 max-w-full rounded-lg border border-zinc-200 dark:border-zinc-700"
+                loading="lazy"
+              />
+            ),
+          }}
+        >
+          {markdown || "_No body yet._"}
+        </ReactMarkdown>
       </div>
     </div>
   );
 }
+

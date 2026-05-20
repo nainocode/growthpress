@@ -6,7 +6,7 @@ export const siteConfig = {
   name: "GrowthPress",
   description:
     "A modern growth-focused blog about tech, AI, earning strategies, and digital business.",
-  url: siteUrl,
+  url: "https://growthpress.vercel.app/",
   keywords: [
     "blogging",
     "AI",

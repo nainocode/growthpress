@@ -24,7 +24,7 @@ export default function Home() {
               href="/blog"
               className="rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow hover:bg-emerald-500 dark:bg-emerald-500 dark:text-zinc-950 dark:hover:bg-emerald-400"
             >
-              Browse all articles
+              Browse all articlesz
             </Link>
             <Link
               href="/about"
