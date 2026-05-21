@@ -1,6 +1,19 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));  /* ← yeh add karo */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@theme {
+  --animate-ticker: ticker 20s linear infinite;
+}
 
 html {
   scroll-behavior: smooth;
