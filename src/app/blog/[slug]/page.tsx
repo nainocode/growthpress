@@ -14,6 +14,8 @@ import { AdSlot } from "@/components/marketing/ad-slot";
 import { blogPostingSchema, siteConfig } from "@/lib/seo";
 import { getAllPosts, getPostBySlug, getRelatedPosts } from "@/lib/posts";
 import { formatDate } from "@/lib/utils";
+import AuthorBox from "@/components/AuthorBox";
+
 
 export async function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
@@ -73,7 +75,6 @@ export default async function BlogPostPage({
 
   return (
     <>
-      {/* ✅ Fix 1: next/script hata ke plain <script> use karo */}
       <script
         id={`jsonld-${post.slug}`}
         type="application/ld+json"
@@ -105,7 +106,6 @@ export default async function BlogPostPage({
               suppressHydrationWarning
             />
           </div>
-
           <div className="mt-6">
             <SocialShare title={post.title} url={shareUrl} />
           </div>
@@ -129,10 +129,19 @@ export default async function BlogPostPage({
         </div>
 
         <aside className="space-y-4 lg:sticky lg:top-24 lg:h-fit">
-          {/* ✅ Fix 2: uniqueHeadings pass karo */}
           <TableOfContents headings={uniqueHeadings} />
           <AdSlot slot="sidebar" />
+
+          <article className="max-w-4xl mx-auto px-4">
+          <AuthorBox
+            name="Husnain Raza"
+            bio="Husnain Raza is a full-stack developer with experience in WordPress, SEO, blogging, and AI-powered workflows. He writes practical content about web development, blogging, automation, and digital growth."
+          />
+        </article>
         </aside>
+
+
+       
       </article>
     </>
   );
