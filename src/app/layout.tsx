@@ -10,6 +10,10 @@ import { Analytics } from "@vercel/analytics/next"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  alternates: {
+    canonical: siteConfig.url,
+  },
+
   metadataBase: new URL(siteConfig.url),
   title: {
     default: `${siteConfig.name} | Naino Growth Blog`,
