@@ -8,13 +8,23 @@ import { slugify } from "@/lib/utils";
 const contentDirectory = path.join(process.cwd(), "content", "posts");
 
 function getHeadingItems(content: string): HeadingItem[] {
+  const idCount: Record<string, number> = {};
+
   return content
     .split("\n")
     .filter((line) => line.startsWith("## ") || line.startsWith("### "))
     .map((line) => {
       const level = line.startsWith("### ") ? 3 : 2;
       const text = line.replace(/^###?\s/, "").trim();
-      return { id: slugify(text), text, level };
+      const baseId = slugify(text);
+
+      if (idCount[baseId] !== undefined) {
+        idCount[baseId]++;
+        return { id: `${baseId}-${idCount[baseId]}`, text, level };
+      } else {
+        idCount[baseId] = 0;
+        return { id: baseId, text, level };
+      }
     });
 }
 

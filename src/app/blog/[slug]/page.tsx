@@ -60,18 +60,6 @@ export default async function BlogPostPage({
   const baseUrl = siteConfig.url.replace(/\/+$/, "");
   const shareUrl = `${baseUrl}/blog/${slug}`;
 
-  // ✅ Fix 2: Duplicate heading IDs unique banao
-  const idCount: Record<string, number> = {};
-  const uniqueHeadings = post.headings.map((h) => {
-    const baseId = h.id;
-    if (idCount[baseId] !== undefined) {
-      idCount[baseId]++;
-      return { ...h, id: `${baseId}-${idCount[baseId]}` };
-    } else {
-      idCount[baseId] = 0;
-      return h;
-    }
-  });
 
   return (
     <>
@@ -129,19 +117,18 @@ export default async function BlogPostPage({
         </div>
 
         <aside className="space-y-4 lg:sticky lg:top-24 lg:h-fit">
-          <TableOfContents headings={uniqueHeadings} />
-          <AdSlot slot="sidebar" />
-
+          <TableOfContents headings={post.headings} />   
+           <AdSlot slot="sidebar" />
           <article className="max-w-4xl mx-auto px-4">
-          <AuthorBox
-            name="Husnain Raza"
-            bio="Husnain Raza is a full-stack developer with experience in WordPress, SEO, blogging, and AI-powered workflows. He writes practical content about web development, blogging, automation, and digital growth."
-          />
-        </article>
+            <AuthorBox
+              name="Husnain Raza"
+              bio="Husnain Raza is a full-stack developer with experience in WordPress, SEO, blogging, and AI-powered workflows. He writes practical content about web development, blogging, automation, and digital growth."
+            />
+          </article>
         </aside>
 
 
-       
+
       </article>
     </>
   );
