@@ -1,7 +1,5 @@
 import type { BlogPost } from "@/lib/types";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://exampleblog.com";
-
 export const siteConfig = {
   name: "GrowthPress",
   description:
@@ -23,21 +21,26 @@ export function blogPostingSchema(post: BlogPost) {
     "@type": "BlogPosting",
     headline: post.title,
     description: post.description,
+    url: `${siteConfig.url}blog/${post.slug}`,
     image: `${siteConfig.url}${post.featuredImage}`,
     datePublished: post.date,
     dateModified: post.updatedAt ?? post.date,
     author: {
       "@type": "Person",
       name: post.author,
+      url: siteConfig.url,
     },
     publisher: {
       "@type": "Organization",
       name: siteConfig.name,
       logo: {
         "@type": "ImageObject",
-        url: `${siteConfig.url}/logo.png`,
+        url: `${siteConfig.url}logo.png`,
       },
     },
-    mainEntityOfPage: `${siteConfig.url}/blog/${post.slug}`,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${siteConfig.url}blog/${post.slug}`,
+    },
   };
 }
