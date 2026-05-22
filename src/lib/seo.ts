@@ -23,8 +23,10 @@ export function blogPostingSchema(post: BlogPost) {
     description: post.description,
     url: `${siteConfig.url}blog/${post.slug}`,
     image: `${siteConfig.url}${post.featuredImage}`,
-    datePublished: post.date,
-    dateModified: post.updatedAt ?? post.date,
+
+    datePublished: new Date(post.date).toISOString(),
+    dateModified: new Date(post.updatedAt ?? post.date).toISOString(),
+
     author: {
       "@type": "Person",
       name: post.author,
