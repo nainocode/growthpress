@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/blog" },
   openGraph: {
     title: `All Articles | ${siteConfig.name}`,
-    description: siteConfig.description,
+    description: `Browse every playbook, guide, and essay published on ${siteConfig.name}.`, 
     url: `${siteConfig.url}/blog`,
   },
 };
