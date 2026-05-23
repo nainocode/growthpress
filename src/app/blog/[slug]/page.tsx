@@ -71,6 +71,7 @@ export default async function BlogPostPage({
 
       <article className="grid gap-8 lg:grid-cols-[1fr_280px]">
         <div>
+          
           <p className="text-sm uppercase tracking-wide text-zinc-500">
             {post.category}
           </p>
@@ -126,9 +127,6 @@ export default async function BlogPostPage({
             />
           </article>
         </aside>
-
-
-
       </article>
     </>
   );
