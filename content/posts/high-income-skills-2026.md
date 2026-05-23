@@ -1,6 +1,6 @@
 ---
 title: "High Income Skills: Real Skills That Can Actually Change Your Income in 2026"
-description: "Discover the top high income skills in 2026 including AI automation, web development, content strategy, video editing, and digital marketing. A practical guide to start earning online."
+description: "Six future-proof skills that companies are actively paying for — from AI workflow automation to prompt engineering. Choose one and start building today."
 date: "2026-05-21"
 author: "Husnain"
 category: "Tech"
