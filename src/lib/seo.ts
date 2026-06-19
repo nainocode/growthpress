@@ -4,7 +4,10 @@ export const siteConfig = {
   name: "GrowthPress",
   description:
     "A modern growth-focused blog about tech, AI, earning strategies, and digital business.",
-  url: "https://growthpress.vercel.app/",
+
+  // ❌ remove trailing slash (IMPORTANT FIX)
+  url: "https://growthpress.vercel.app",
+
   keywords: [
     "blogging",
     "AI",
@@ -15,14 +18,22 @@ export const siteConfig = {
   ],
 };
 
+// helper to avoid double slash bugs
+const siteUrl = siteConfig.url;
+
 export function blogPostingSchema(post: BlogPost) {
+  const postUrl = `${siteUrl}/blog/${post.slug}`;
+
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
+
     headline: post.title,
     description: post.description,
-    url: `${siteConfig.url}blog/${post.slug}`,
-    image: `${siteConfig.url}${post.featuredImage}`,
+
+    url: postUrl,
+
+    image: `${siteUrl}${post.featuredImage.startsWith("/") ? "" : "/"}${post.featuredImage}`,
 
     datePublished: new Date(post.date).toISOString(),
     dateModified: new Date(post.updatedAt ?? post.date).toISOString(),
@@ -30,19 +41,21 @@ export function blogPostingSchema(post: BlogPost) {
     author: {
       "@type": "Person",
       name: post.author,
-      url: siteConfig.url,
+      url: siteUrl,
     },
+
     publisher: {
       "@type": "Organization",
       name: siteConfig.name,
       logo: {
         "@type": "ImageObject",
-        url: `${siteConfig.url}logo.png`,
+        url: `${siteUrl}/logo.png`,
       },
     },
+
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${siteConfig.url}blog/${post.slug}`,
+      "@id": postUrl,
     },
   };
 }
